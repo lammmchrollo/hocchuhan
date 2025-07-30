@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Từ Vựng Tiếng Nhật</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-50 font-sans min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-5xl bg-white rounded-2xl shadow-lg p-6 space-y-6">
+        <h1 class="text-3xl font-bold text-center text-pink-600">🌸 Học Tiếng Nhật 🌸</h1>
+
+        <div class="flex flex-row items-center justify-center w-full my-4">
+            <button id="prevBtn" class="bg-pink-300 text-white px-6 py-16 rounded hover:bg-pink-400 mx-2 flex-shrink-0 self-center text-2xl font-bold">←</button>
+            <div id="vocab-container" class="flex flex-col space-y-4"></div>
+            <button id="nextBtn" class="bg-pink-300 text-white px-6 py-16 rounded hover:bg-pink-400 mx-2 flex-shrink-0 self-center text-2xl font-bold">→</button>
+        </div>
+        <div class="flex justify-center mt-2">
+            <span id="pageInfo" class="text-pink-700 font-semibold"></span>
+        </div>
+    </div>
+
+    <script>
+        let vocabData = [];
+        let currentPage = 0;
+        const pageSize = 5;
+
+        async function fetchVocab() {
+            const res = await fetch('/api/vocab');
+            vocabData = await res.json();
+            currentPage = 0;
+            displayWords();
+        }
+
+        function displayWords() {
+            const container = document.getElementById('vocab-container');
+            container.innerHTML = '';
+            const start = currentPage * pageSize;
+            const end = Math.min(start + pageSize, vocabData.length);
+
+            // Hàng 1: 2 từ, Hàng 2: 3 từ
+            let row1 = document.createElement('div');
+            row1.className = 'flex flex-row justify-center gap-8 mb-2';
+            let row2 = document.createElement('div');
+            row2.className = 'flex flex-row justify-center gap-8';
+
+            for (let i = start; i < end; i++) {
+                const word = vocabData[i];
+                const card = document.createElement('div');
+                card.className = 'bg-pink-100 rounded-xl p-4 shadow flex flex-col items-center w-48';
+
+                const img = document.createElement('img');
+                img.src = word.image;
+                img.alt = 'Ảnh';
+                img.className = 'h-24 w-full object-contain rounded mb-1';
+                card.appendChild(img);
+
+                const jp = document.createElement('div');
+                jp.textContent = word.japanese;
+                jp.className = 'text-xl font-bold text-pink-600';
+                card.appendChild(jp);
+
+                const phon = document.createElement('div');
+                phon.textContent = word.phonetic;
+                phon.className = 'text-base text-pink-800 italic';
+                card.appendChild(phon);
+
+                const vi = document.createElement('div');
+                vi.textContent = "Nghĩa: " + word.vietnamese;
+                vi.className = 'text-base text-pink-900';
+                card.appendChild(vi);
+
+                const ex = document.createElement('div');
+                ex.textContent = "Ví dụ: " + word.example;
+                ex.className = 'text-sm text-gray-700 italic';
+                card.appendChild(ex);
+
+                if (word.example_meaning) {
+                    const exMean = document.createElement('div');
+                    exMean.textContent = "Nghĩa ví dụ: " + word.example_meaning;
+                    exMean.className = 'text-xs text-gray-500 italic';
+                    card.appendChild(exMean);
+                }
+
+                if (i - start < 2) {
+                    row1.appendChild(card);
+                } else {
+                    row2.appendChild(card);
+                }
+            }
+            container.appendChild(row1);
+            container.appendChild(row2);
+
+            document.getElementById('pageInfo').textContent = `Trang ${currentPage + 1} / ${Math.ceil(vocabData.length / pageSize)}`;
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if ((currentPage + 1) * pageSize < vocabData.length) {
+                currentPage++;
+                displayWords();
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                displayWords();
+            }
+        });
+
+        fetchVocab();
+    </script>
+</body>
+</html>
