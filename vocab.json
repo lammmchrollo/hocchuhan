@@ -1,0 +1,42 @@
+[
+    {
+        "japanese": "男性",
+        "phonetic": "だんせい",
+        "vietnamese": "NAM GIỚI",
+        "example": "理想の{男性/女性}と結婚する",
+        "example_meaning": "Kết hôn với người đàn ông/phụ nữ lý tưởng",
+        "image": "https://placekitten.com/300/200"
+    },
+    {
+        "japanese": "犬",
+        "phonetic": "Inu",
+        "vietnamese": "Chó",
+        "example": "犬は友達です。",
+        "example_meaning": "Chó là bạn。",
+        "image": "https://placedog.net/300/200?id=1"
+    },
+    {
+        "japanese": "花",
+        "phonetic": "Hana",
+        "vietnamese": "Hoa",
+        "example": "花が咲いています。",
+        "example_meaning": "Hoa đang nở。",
+        "image": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+    },
+    {
+        "japanese": "ありがとう",
+        "phonetic": "Arigatou",
+        "vietnamese": "Cảm ơn",
+        "example": "ありがとうと言いました。",
+        "example_meaning": "Tôi đã nói cảm ơn。",
+        "image": "https://placehold.co/300x200/ffb6c1/ffffff?text=Thanks"
+    },
+    {
+        "japanese": "大好き",
+        "phonetic": "Daisuki",
+        "vietnamese": "Rất thích, Yêu thích",
+        "example": "あなたが大好きです。",
+        "example_meaning": "Tôi rất thích bạn。",
+        "image": "https://placehold.co/300x200/fcd34d/ffffff?text=Love"
+    }
+]
